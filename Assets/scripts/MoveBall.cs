@@ -7,10 +7,19 @@ public class MoveBall : MonoBehaviour {
 	public int ballSpeed = 30;
 
 	private Rigidbody2D ball;
+	private bool hasStarted = false;
 
 	void Start () {
 		ball = GetComponent<Rigidbody2D> ();
-		ball.velocity = Vector2.right * ballSpeed;
+	}
+
+	void Update() {
+		if (!hasStarted) {
+			if (Input.GetAxisRaw ("Vertical") != 0) {
+				ball.velocity = new Vector3 (ballSpeed, 0);
+				hasStarted = true;
+			}
+		}
 	}
 
 	void OnCollisionEnter2D (Collision2D collider) {
