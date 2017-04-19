@@ -7,32 +7,35 @@ public class MoveBall : MonoBehaviour {
 	public int ballSpeed = 30;
 
 	private Rigidbody2D ball;
-	private bool hasStarted = false;
 
 	void Start () {
 		ball = GetComponent<Rigidbody2D> ();
 	}
 
-	void Update() {
-		if (!hasStarted) {
-			if (Input.GetAxisRaw ("Vertical") != 0) {
-				ball.velocity = new Vector3 (ballSpeed, 0);
-				hasStarted = true;
-			}
-		}
+	public void startMoving () {
+		ball.velocity = new Vector3 (ballSpeed, 0);
 	}
 
 	void OnCollisionEnter2D (Collision2D collider) {
 		GameObject colliderObject = collider.gameObject;
 		if (collider.gameObject.CompareTag ("left_racket")) {
 			float yMagnitude = getYMagnitude (transform.position, colliderObject.transform.position, collider.collider.bounds.size.y);
-			Vector2 newDirection = new Vector2 (1, yMagnitude).normalized;
+
+			float direction = 1;
+			if (colliderObject.transform.position.x > transform.position.x) {
+				direction = -1;
+			}
+			Vector2 newDirection = new Vector2 (direction, yMagnitude).normalized;
 			ball.velocity = newDirection * ballSpeed;
 		} 
 
 		if (collider.gameObject.CompareTag ("right_racket")) {
 			float yMagnitude = getYMagnitude (transform.position, colliderObject.transform.position, collider.collider.bounds.size.y);
-			Vector2 newDirection = new Vector2 (-1, yMagnitude).normalized;
+			float direction = -1;
+			if (colliderObject.transform.position.x < transform.position.x) {
+				direction = 1;
+			}
+			Vector2 newDirection = new Vector2 (direction, yMagnitude).normalized;
 			ball.velocity = newDirection * ballSpeed;
 		}
 	}
