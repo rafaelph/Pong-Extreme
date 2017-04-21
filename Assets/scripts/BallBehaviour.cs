@@ -8,6 +8,10 @@ public class BallBehaviour : MonoBehaviour {
 
 	private Rigidbody2D ball;
 
+	public void setMovementDirection(Vector2 direction) {
+		ball.velocity = direction;
+	}
+
 	void Start () {
 		ball = GetComponent<Rigidbody2D> ();
 	}
