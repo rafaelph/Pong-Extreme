@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameMaster : MonoBehaviour {
 
 	public Text scoreText;
-	public Rigidbody2D racket;
+	public PlayerRacket racket;
 	public float RacketSpeed;
 
 	public BallBehaviour ballBehaviour;
@@ -27,9 +27,9 @@ public class GameMaster : MonoBehaviour {
 		if (downButtonPress && upButtonPress) {
 			stopRacket ();
 		} else if (downButtonPress) {
-			racket.velocity = RacketSpeed * Vector2.down;
+			racket.setDirection(RacketSpeed * Vector2.down);
 		} else if (upButtonPress) {
-			racket.velocity = RacketSpeed * Vector2.up;
+			racket.setDirection (RacketSpeed * Vector2.up);
 		} else {
 			stopRacket ();
 		}
@@ -70,7 +70,7 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	private void stopRacket() {
-		racket.velocity = Vector2.zero;
+		racket.setDirection (Vector2.zero);
 	}
 
 	private void setScore(int leftPlayerScore, int rightPlayerScore) {
