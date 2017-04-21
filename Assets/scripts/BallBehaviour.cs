@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour {
 
-	public int ballSpeed = 30;
+	public int ballSpeed;
 
 	private Rigidbody2D ball;
-
-	public void setMovementDirection(Vector2 direction) {
-		ball.velocity = direction;
-	}
 
 	void Start () {
 		ball = GetComponent<Rigidbody2D> ();
@@ -40,7 +36,15 @@ public class BallBehaviour : MonoBehaviour {
 		}
 	}
 
-	float getYMagnitude(Vector2 ballVector, Vector2 racketVector, float racketHeight) {
+	public void setMovementDirection(Vector2 direction) {
+		ball.velocity = direction;
+	}
+
+	public Vector2 getBallPosition() {
+		return ball.position;
+	}
+
+	private float getYMagnitude(Vector2 ballVector, Vector2 racketVector, float racketHeight) {
 		return (ballVector.y - racketVector.y) / racketHeight;
 	}
 }

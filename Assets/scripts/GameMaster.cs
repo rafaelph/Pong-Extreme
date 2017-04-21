@@ -8,18 +8,15 @@ public class GameMaster : MonoBehaviour {
 	public Text scoreText;
 	public PlayerRacket racket;
 	public float RacketSpeed;
-
 	public BallBehaviour ballBehaviour;
-	private int ballSpeed;
 
+	private int ballSpeed;
 	private bool upButtonPress = false;
 	private bool downButtonPress = false;
-
 	private bool hasGameStarted = false;
-
 	private ScoreManager scoreManager = ScoreManager.getInstance();
 
-	public void Start() {
+	void Start() {
 		ballSpeed = ballBehaviour.ballSpeed;
 	}
 
@@ -27,9 +24,9 @@ public class GameMaster : MonoBehaviour {
 		if (downButtonPress && upButtonPress) {
 			stopRacket ();
 		} else if (downButtonPress) {
-			racket.setDirection(RacketSpeed * Vector2.down);
+			racket.setMovementDirection(RacketSpeed * Vector2.down);
 		} else if (upButtonPress) {
-			racket.setDirection (RacketSpeed * Vector2.up);
+			racket.setMovementDirection (RacketSpeed * Vector2.up);
 		} else {
 			stopRacket ();
 		}
@@ -69,8 +66,12 @@ public class GameMaster : MonoBehaviour {
 		downButtonPress = false;
 	}
 
+	public Vector2 getBallPosition() {
+		return ballBehaviour.getBallPosition();
+	}
+
 	private void stopRacket() {
-		racket.setDirection (Vector2.zero);
+		racket.setMovementDirection (Vector2.zero);
 	}
 
 	private void setScore(int leftPlayerScore, int rightPlayerScore) {

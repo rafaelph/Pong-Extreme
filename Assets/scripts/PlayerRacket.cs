@@ -10,7 +10,7 @@ public class PlayerRacket : MonoBehaviour {
 		racket = GetComponent<Rigidbody2D> ();
 	}
 	
-	public void setDirection(Vector2 direction) {
+	public void setMovementDirection(Vector2 direction) {
 		racket.velocity = direction;
 	}
 }
