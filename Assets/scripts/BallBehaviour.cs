@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveBall : MonoBehaviour {
+public class BallBehaviour : MonoBehaviour {
 
 	public int ballSpeed = 30;
 
@@ -10,10 +10,6 @@ public class MoveBall : MonoBehaviour {
 
 	void Start () {
 		ball = GetComponent<Rigidbody2D> ();
-	}
-
-	public void startMoving () {
-		ball.velocity = new Vector3 (ballSpeed, 0);
 	}
 
 	void OnCollisionEnter2D (Collision2D collider) {

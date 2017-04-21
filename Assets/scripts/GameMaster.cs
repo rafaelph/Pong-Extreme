@@ -9,7 +9,9 @@ public class GameMaster : MonoBehaviour {
 	public Rigidbody2D racket;
 	public Rigidbody2D Ball;
 	public float RacketSpeed;
-	public float BallSpeed;
+
+	private BallBehaviour ballBehaviour;
+	private int ballSpeed;
 
 	private bool upButtonPress = false;
 	private bool downButtonPress = false;
@@ -17,6 +19,11 @@ public class GameMaster : MonoBehaviour {
 	private bool hasGameStarted = false;
 
 	private ScoreManager scoreManager = ScoreManager.getInstance();
+
+	public void Start() {
+		ballBehaviour = GameObject.Find ("Ball").GetComponent<BallBehaviour> ();
+		ballSpeed = ballBehaviour.ballSpeed;
+	}
 
 	void Update() {
 		if (downButtonPress && upButtonPress) {
@@ -43,7 +50,7 @@ public class GameMaster : MonoBehaviour {
 	public void onUpButtonPress() {
 		if (!hasGameStarted) {
 			hasGameStarted = true;
-			Ball.velocity = new Vector3 (BallSpeed, 0);
+			Ball.velocity = new Vector3 (ballSpeed, 0);
 		}
 		upButtonPress = true;
 	}
@@ -55,7 +62,7 @@ public class GameMaster : MonoBehaviour {
 	public void onDownButtonPress() {
 		if (!hasGameStarted) {
 			hasGameStarted = true;
-			Ball.velocity = new Vector3 (BallSpeed, 0);
+			Ball.velocity = new Vector3 (ballSpeed, 0);
 		}
 		downButtonPress = true;
 	}

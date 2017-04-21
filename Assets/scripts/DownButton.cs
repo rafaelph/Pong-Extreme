@@ -8,11 +8,11 @@ public class DownButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler 
 
 	public GameMaster gameMaster;
 
-	public void OnPointerDown (PointerEventData asd) {
+	public void OnPointerDown (PointerEventData ignore) {
 		gameMaster.onDownButtonPress ();
 	}
 
-	public void OnPointerUp (PointerEventData asd) {
+	public void OnPointerUp (PointerEventData ignore) {
 		gameMaster.onDownButtonRelease ();
 	}
 }
