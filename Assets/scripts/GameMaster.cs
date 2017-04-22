@@ -20,7 +20,7 @@ public class GameMaster : MonoBehaviour {
 		ballSpeed = ballBehaviour.ballSpeed;
 	}
 
-	void Update() {
+	void FixedUpdate() {
 		if (downButtonPress && upButtonPress) {
 			stopRacket ();
 		} else if (downButtonPress) {
