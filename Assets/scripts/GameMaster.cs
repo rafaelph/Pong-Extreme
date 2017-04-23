@@ -43,10 +43,7 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	public void onUpButtonPress() {
-		if (!hasGameStarted) {
-			hasGameStarted = true;
-			ballBehaviour.setMovementDirection (new Vector2 (ballSpeed, 0));
-		}
+		moveBallIfGameStarted ();
 		upButtonPress = true;
 	}
 
@@ -55,10 +52,7 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	public void onDownButtonPress() {
-		if (!hasGameStarted) {
-			hasGameStarted = true;
-			ballBehaviour.setMovementDirection (new Vector2 (ballSpeed, 0));
-		}
+		moveBallIfGameStarted ();
 		downButtonPress = true;
 	}
 
@@ -76,6 +70,13 @@ public class GameMaster : MonoBehaviour {
 
 	private void setScore(int leftPlayerScore, int rightPlayerScore) {
 		scoreText.text = leftPlayerScore.ToString () + " - " + rightPlayerScore.ToString ();
+	}
+
+	private void moveBallIfGameStarted() {
+		if (!hasGameStarted) {
+			hasGameStarted = true;
+			ballBehaviour.setMovementDirection (new Vector2 (ballSpeed, 0));
+		}
 	}
 		
 }
