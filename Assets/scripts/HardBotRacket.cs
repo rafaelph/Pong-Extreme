@@ -16,11 +16,23 @@ public class HardBotRacket : MonoBehaviour {
 }
 	
 	void FixedUpdate () {
-		if (isBallGoingToTheLeft () || isBallNotReactable ()) {
+		if (isBallRightOfRacket ()) {
+			returnToCenterPosition ();
+		} else if (isBallGoingToTheLeft () || isBallNotReactable ()) {
 			stopRacket ();
-			racket.velocity = Vector2.zero;
 		} else {
 			attemptToBlockTheBall ();
+		}
+	}
+
+	private void returnToCenterPosition () {
+		float racketYPosition = Mathf.FloorToInt (racket.position.y);
+		if (racketYPosition < 0) {
+			racket.velocity = new Vector2 (0, racketSpeed);
+		} else if (racketYPosition > 0) {
+			racket.velocity = new Vector2 (0, -racketSpeed);
+		} else {
+			racket.velocity = Vector2.zero;
 		}
 	}
 
@@ -45,5 +57,9 @@ public class HardBotRacket : MonoBehaviour {
 		} else {
 			racket.velocity = Vector2.zero;
 		}
+	}
+
+	private bool isBallRightOfRacket() {
+		return GameMaster.getBallPosition().x > racket.position.x;
 	}
 }
