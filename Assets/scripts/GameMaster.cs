@@ -11,8 +11,6 @@ public class GameMaster : MonoBehaviour {
 	public BallBehaviour ballBehaviour;
 
 	private int ballSpeed;
-	private bool upButtonPress = false;
-	private bool downButtonPress = false;
 	private bool hasGameStarted = false;
 	private ScoreManager scoreManager = ScoreManager.getInstance();
 
@@ -32,24 +30,6 @@ public class GameMaster : MonoBehaviour {
 	public void onRightPlayerScore() {
 		scoreManager.increasePlayerTwoScore ();
 		setScore (scoreManager.getPlayerOneScore (), scoreManager.getPlayerTwoScore ());
-	}
-
-	public void onUpButtonPress() {
-		moveBallIfGameStarted ();
-		upButtonPress = true;
-	}
-
-	public void onUpButtonRelease() {
-		upButtonPress = false;
-	}
-
-	public void onDownButtonPress() {
-		moveBallIfGameStarted ();
-		downButtonPress = true;
-	}
-
-	public void onDownButtonRelease() {
-		downButtonPress = false;
 	}
 
 	public Vector2 getBallPosition() {
