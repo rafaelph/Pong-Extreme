@@ -9,6 +9,7 @@ public class GameMaster : MonoBehaviour {
 	public PlayerRacket racket;
 	public float RacketSpeed;
 	public BallBehaviour ballBehaviour;
+	public CameraShake cameraShake;
 
 	private int ballSpeed;
 	private bool hasGameStarted = false;
@@ -25,11 +26,14 @@ public class GameMaster : MonoBehaviour {
 	public void onLeftPlayerScore() {
 		scoreManager.increasePlayerOneScore ();
 		setScore (scoreManager.getPlayerOneScore (), scoreManager.getPlayerTwoScore ());
+		shakeScreen ();
 	}
 
 	public void onRightPlayerScore() {
 		scoreManager.increasePlayerTwoScore ();
 		setScore (scoreManager.getPlayerOneScore (), scoreManager.getPlayerTwoScore ());
+		shakeScreen ();
+
 	}
 
 	public Vector2 getBallPosition() {
@@ -58,6 +62,10 @@ public class GameMaster : MonoBehaviour {
 			hasGameStarted = true;
 			ballBehaviour.setMovementDirection (new Vector2 (ballSpeed, 0));
 		}
+	}
+
+	private void shakeScreen() {
+		cameraShake.shakeDuration = 0.2f;
 	}
 		
 }
