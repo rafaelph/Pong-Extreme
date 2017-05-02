@@ -26,7 +26,6 @@ public class GameMaster : MonoBehaviour {
 	public void onLeftPlayerScore() {
 		scoreManager.increasePlayerOneScore ();
 		setScore (scoreManager.getPlayerOneScore (), scoreManager.getPlayerTwoScore ());
-		shakeScreen ();
 	}
 
 	public void onRightPlayerScore() {

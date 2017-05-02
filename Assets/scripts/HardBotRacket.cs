@@ -17,7 +17,8 @@ public class HardBotRacket : MonoBehaviour {
 	
 	void FixedUpdate () {
 		if (isBallGoingToTheLeft () || isBallNotReactable ()) {
-			returnToCenterPosition ();
+			stopRacket ();
+			racket.velocity = Vector2.zero;
 		} else {
 			attemptToBlockTheBall ();
 		}
@@ -31,15 +32,8 @@ public class HardBotRacket : MonoBehaviour {
 		return GameMaster.getBallPosition ().x < 0;
 	}
 
-	private void returnToCenterPosition () {
-		float racketYPosition = Mathf.FloorToInt (racket.position.y);
-		if (racketYPosition < 0) {
-			racket.velocity = new Vector2 (0, racketSpeed);
-		} else if (racketYPosition > 0) {
-			racket.velocity = new Vector2 (0, -racketSpeed);
-		} else {
-			racket.velocity = Vector2.zero;
-		}
+	private void stopRacket () {
+		racket.velocity = Vector2.zero;
 	}
 
 	private void attemptToBlockTheBall() {
