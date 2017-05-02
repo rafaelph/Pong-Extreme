@@ -20,16 +20,8 @@ public class GameMaster : MonoBehaviour {
 		ballSpeed = ballBehaviour.ballSpeed;
 	}
 
-	void FixedUpdate() {
-		if (downButtonPress && upButtonPress) {
-			stopRacket ();
-		} else if (downButtonPress) {
-			racket.setMovementDirection(RacketSpeed * Vector2.down);
-		} else if (upButtonPress) {
-			racket.setMovementDirection (RacketSpeed * Vector2.up);
-		} else {
-			stopRacket ();
-		}
+	void Update() {
+
 	}
 
 	public void onLeftPlayerScore() {
@@ -62,6 +54,15 @@ public class GameMaster : MonoBehaviour {
 
 	public Vector2 getBallPosition() {
 		return ballBehaviour.getBallPosition();
+	}
+
+	public Vector2 getBallDirection() {
+		return ballBehaviour.getBallDirection();
+	}
+
+	public void onAnalogPress(Vector2 analogPosition) {
+		moveBallIfGameStarted ();
+		racket.setMovementDirection (analogPosition * RacketSpeed);
 	}
 
 	private void stopRacket() {

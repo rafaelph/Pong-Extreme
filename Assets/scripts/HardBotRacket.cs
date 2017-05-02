@@ -8,34 +8,48 @@ public class HardBotRacket : MonoBehaviour {
 
 	private Rigidbody2D racket;
 	private float racketSpeed = 30;
-	private float thresholdFactor = 1.8f;
+	private float thresholdFactor = 1f;
 	private float racketHeight;
 
 	void Start () {
 		racket = GetComponent<Rigidbody2D> ();
-	}
+}
 	
-	void Update () {
-		Vector2 ballPosition = GameMaster.getBallPosition ();
-		float ballYPosition = ballPosition.y;
-		float yDifference = ballYPosition - racket.position.y;
-
-		if ((ballPosition.x < racket.position.x)) {
-			if (yDifference > thresholdFactor) {
-				racket.velocity = new Vector2 (0, racketSpeed);
-			} else if (yDifference < -thresholdFactor) {
-				racket.velocity = new Vector2 (0, -racketSpeed);
-			} else {
-				racket.velocity = Vector2.zero;
-			}
+	void FixedUpdate () {
+		if (isBallGoingToTheLeft () || isBallNotReactable ()) {
+			returnToCenterPosition ();
 		} else {
-			if (yDifference > thresholdFactor) {
-				racket.velocity = new Vector2 (0, -racketSpeed);
-			} else if (yDifference < -thresholdFactor) {
-				racket.velocity = new Vector2 (0, racketSpeed);
-			} else {
-				racket.velocity = Vector2.zero;
-			}
+			attemptToBlockTheBall ();
+		}
+	}
+
+	private bool isBallGoingToTheLeft() {
+		return GameMaster.getBallDirection().x < 0;
+	}
+
+	private bool isBallNotReactable() {
+		return GameMaster.getBallPosition ().x < 0;
+	}
+
+	private void returnToCenterPosition () {
+		float racketYPosition = Mathf.FloorToInt (racket.position.y);
+		if (racketYPosition < 0) {
+			racket.velocity = new Vector2 (0, racketSpeed);
+		} else if (racketYPosition > 0) {
+			racket.velocity = new Vector2 (0, -racketSpeed);
+		} else {
+			racket.velocity = Vector2.zero;
+		}
+	}
+
+	private void attemptToBlockTheBall() {
+		float ballAndRacketYDifference = Mathf.FloorToInt(GameMaster.getBallPosition ().y - racket.position.y);
+		if (ballAndRacketYDifference > thresholdFactor) {
+			racket.velocity = new Vector2 (0, racketSpeed);
+		} else if (ballAndRacketYDifference < -thresholdFactor) {
+			racket.velocity = new Vector2 (0, -racketSpeed);
+		} else {
+			racket.velocity = Vector2.zero;
 		}
 	}
 }

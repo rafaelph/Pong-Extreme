@@ -44,6 +44,10 @@ public class BallBehaviour : MonoBehaviour {
 		return ball.position;
 	}
 
+	public Vector2 getBallDirection() {
+		return ball.velocity;
+	}
+
 	private float getYMagnitude(Vector2 ballVector, Vector2 racketVector, float racketHeight) {
 		return (ballVector.y - racketVector.y) / racketHeight;
 	}
