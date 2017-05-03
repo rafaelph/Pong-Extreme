@@ -7,9 +7,11 @@ public class BallBehaviour : MonoBehaviour {
 	public int ballSpeed;
 
 	private Rigidbody2D ball;
+	private ParticleSystem ParticleSystem;
 
 	void Start () {
 		ball = GetComponent<Rigidbody2D> ();
+		ParticleSystem = GetComponentInChildren<ParticleSystem> ();
 	}
 
 	void OnCollisionEnter2D (Collision2D collider) {
@@ -23,6 +25,7 @@ public class BallBehaviour : MonoBehaviour {
 			}
 			Vector2 newDirection = new Vector2 (direction, yMagnitude).normalized;
 			ball.velocity = newDirection * ballSpeed;
+			activateParticle ();
 		} 
 
 		if (collider.gameObject.CompareTag ("right_racket")) {
@@ -33,6 +36,7 @@ public class BallBehaviour : MonoBehaviour {
 			}
 			Vector2 newDirection = new Vector2 (direction, yMagnitude).normalized;
 			ball.velocity = newDirection * ballSpeed;
+			activateParticle ();
 		}
 	}
 
@@ -46,6 +50,10 @@ public class BallBehaviour : MonoBehaviour {
 
 	public Vector2 getBallDirection() {
 		return ball.velocity;
+	}
+
+	private void activateParticle() {
+		ParticleSystem.Play ();
 	}
 
 	private float getYMagnitude(Vector2 ballVector, Vector2 racketVector, float racketHeight) {
