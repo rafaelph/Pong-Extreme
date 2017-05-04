@@ -5,15 +5,18 @@ using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour {
 
-	public Text scoreText;
 	public PlayerRacket racket;
 	public float RacketSpeed;
 	public BallBehaviour ballBehaviour;
 	public CameraShake cameraShake;
 
+	public Health playerOneHealth;
+	public Health playerTwoHealth;
+
+	public GameObject gameOverScreen;
+
 	private int ballSpeed;
 	private bool hasGameStarted = false;
-	private ScoreManager scoreManager = ScoreManager.getInstance();
 
 	void Start() {
 		ballSpeed = ballBehaviour.ballSpeed;
@@ -24,14 +27,16 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	public void onLeftPlayerScore() {
-		scoreManager.increasePlayerOneScore ();
-		setScore (scoreManager.getPlayerOneScore (), scoreManager.getPlayerTwoScore ());
+		playerTwoHealth.decreaseHealth ();
 	}
 
 	public void onRightPlayerScore() {
-		scoreManager.increasePlayerTwoScore ();
-		setScore (scoreManager.getPlayerOneScore (), scoreManager.getPlayerTwoScore ());
 		shakeScreen ();
+		playerOneHealth.decreaseHealth ();
+		if (playerOneHealth.getHealth () <= 0f) {
+			showGameOverScreen ();
+			ballBehaviour.setMovementDirection (Vector2.zero);
+		}
 
 	}
 
@@ -48,12 +53,12 @@ public class GameMaster : MonoBehaviour {
 		racket.setMovementDirection (analogPosition * RacketSpeed);
 	}
 
-	private void stopRacket() {
-		racket.setMovementDirection (Vector2.zero);
+	private void showGameOverScreen() {
+		gameOverScreen.SetActive (true);
 	}
 
-	private void setScore(int leftPlayerScore, int rightPlayerScore) {
-		scoreText.text = leftPlayerScore.ToString () + " - " + rightPlayerScore.ToString ();
+	private void stopRacket() {
+		racket.setMovementDirection (Vector2.zero);
 	}
 
 	private void moveBallIfGameStarted() {
