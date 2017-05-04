@@ -11,7 +11,7 @@ public class HardBotRacket : MonoBehaviour {
 	private float thresholdFactor = 1f;
 	private float racketHeight;
 
-	void Start () {
+	void Awake () {
 		racket = GetComponent<Rigidbody2D> ();
 }
 	
@@ -23,6 +23,10 @@ public class HardBotRacket : MonoBehaviour {
 		} else {
 			attemptToBlockTheBall ();
 		}
+	}
+
+	public void resetRacketPosition() {
+		racket.transform.position = new Vector2 (26, 0);
 	}
 
 	private void returnToCenterPosition () {

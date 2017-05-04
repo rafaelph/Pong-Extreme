@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameMaster : MonoBehaviour {
 
 	public PlayerRacket racket;
+	public HardBotRacket bot;
 	public float RacketSpeed;
 	public BallBehaviour ballBehaviour;
 	public CameraShake cameraShake;
@@ -15,26 +16,30 @@ public class GameMaster : MonoBehaviour {
 
 	public GameObject gameOverScreen;
 
+	private Text screenText;
+
 	private int ballSpeed;
 	private bool hasGameStarted = false;
 
 	void Start() {
 		ballSpeed = ballBehaviour.ballSpeed;
-	}
-
-	void Update() {
-
+		initialize ();
+		screenText = gameOverScreen.GetComponentInChildren<Text> ();
 	}
 
 	public void onLeftPlayerScore() {
-		playerTwoHealth.decreaseHealth ();
+		playerTwoHealth.setHealth (playerTwoHealth.getHealth() - 10);
+		if (playerTwoHealth.getHealth () <= 0f) {
+			showFinishGameOverlayWithText ("You won!");
+			ballBehaviour.setMovementDirection (Vector2.zero);
+		}
 	}
 
 	public void onRightPlayerScore() {
 		shakeScreen ();
-		playerOneHealth.decreaseHealth ();
+		playerOneHealth.setHealth (playerOneHealth.getHealth() - 10);
 		if (playerOneHealth.getHealth () <= 0f) {
-			showGameOverScreen ();
+			showFinishGameOverlayWithText ("Game Over");
 			ballBehaviour.setMovementDirection (Vector2.zero);
 		}
 
@@ -53,8 +58,13 @@ public class GameMaster : MonoBehaviour {
 		racket.setMovementDirection (analogPosition * RacketSpeed);
 	}
 
-	private void showGameOverScreen() {
+	public void onRestartGame() {
+		initialize ();
+	}
+
+	private void showFinishGameOverlayWithText(string text) {
 		gameOverScreen.SetActive (true);
+		screenText.text = text;
 	}
 
 	private void stopRacket() {
@@ -70,6 +80,16 @@ public class GameMaster : MonoBehaviour {
 
 	private void shakeScreen() {
 		cameraShake.shakeDuration = 0.2f;
+	}
+
+	private void initialize() {
+		hasGameStarted = false;
+		playerOneHealth.setHealth (100);
+		playerTwoHealth.setHealth (100);
+		gameOverScreen.SetActive (false);
+		ballBehaviour.resetBallPosition ();
+		racket.resetRacketPosition ();
+		bot.resetRacketPosition ();
 	}
 		
 }

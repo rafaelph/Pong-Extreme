@@ -9,18 +9,31 @@ public class Health : MonoBehaviour {
 
 	private RectTransform healthValueSprite;
 
-	void Start() {
+	void Awake() {
 		healthValueSprite = GetComponentsInChildren<RectTransform> ()[1];
 	}
 
-	public void decreaseHealth() {
-		currentHealth = currentHealth - 10f;
-		if (currentHealth >= 0) {
-			healthValueSprite.transform.localScale = new Vector3 (currentHealth/maxHealth, healthValueSprite.transform.localScale.y);
+	void Start() {
+	}
+
+	public void setHealth(float health) {
+		if (health >= 0 && health <= maxHealth) {
+			currentHealth = health;
+		} else if (health < 0) {
+			currentHealth = 0;
+		} else {
+			currentHealth = maxHealth;
 		}
+		updateHealthDisplay ();
 	}
 
 	public float getHealth() {
 		return currentHealth;
+	}
+
+	private void updateHealthDisplay() {
+		if (currentHealth >= 0) {
+			healthValueSprite.transform.localScale = new Vector3 (currentHealth/maxHealth, healthValueSprite.transform.localScale.y);
+		}
 	}
 }

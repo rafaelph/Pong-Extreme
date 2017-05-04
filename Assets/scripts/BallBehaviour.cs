@@ -9,9 +9,13 @@ public class BallBehaviour : MonoBehaviour {
 	private Rigidbody2D ball;
 	private ParticleSystem ParticleSystem;
 
-	void Start () {
+	void Awake() {
 		ball = GetComponent<Rigidbody2D> ();
 		ParticleSystem = GetComponentInChildren<ParticleSystem> ();
+	}
+
+	void Start () {
+
 	}
 
 	void OnCollisionEnter2D (Collision2D collider) {
@@ -50,6 +54,10 @@ public class BallBehaviour : MonoBehaviour {
 
 	public Vector2 getBallDirection() {
 		return ball.velocity;
+	}
+
+	public void resetBallPosition() {
+		ball.transform.position = Vector2.zero;
 	}
 
 	private void activateParticle() {
