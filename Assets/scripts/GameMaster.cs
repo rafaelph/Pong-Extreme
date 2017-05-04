@@ -20,6 +20,7 @@ public class GameMaster : MonoBehaviour {
 
 	private int ballSpeed;
 	private bool hasGameStarted = false;
+	private bool isPaused = false;
 
 	void Start() {
 		ballSpeed = ballBehaviour.ballSpeed;
@@ -27,10 +28,21 @@ public class GameMaster : MonoBehaviour {
 		screenText = gameOverScreen.GetComponentInChildren<Text> ();
 	}
 
+	void Update() {
+		if (Input.GetKey(KeyCode.Escape)) {
+			if (!isPaused) { // if game is not yet paused, ESC will pause it
+				isPaused = true;
+				pauseGame();
+			} else { // if game is paused and ESC is pressed, it's the second press. QUIT
+				Application.Quit();
+			}
+		}
+	}
+
 	public void onLeftPlayerScore() {
 		playerTwoHealth.setHealth (playerTwoHealth.getHealth() - 10);
 		if (playerTwoHealth.getHealth () <= 0f) {
-			showFinishGameOverlayWithText ("You won!");
+			showOverlayWithText ("You won!");
 			ballBehaviour.setMovementDirection (Vector2.zero);
 		}
 	}
@@ -39,7 +51,7 @@ public class GameMaster : MonoBehaviour {
 		shakeScreen ();
 		playerOneHealth.setHealth (playerOneHealth.getHealth() - 10);
 		if (playerOneHealth.getHealth () <= 0f) {
-			showFinishGameOverlayWithText ("Game Over");
+			showOverlayWithText ("Game Over");
 			ballBehaviour.setMovementDirection (Vector2.zero);
 		}
 
@@ -59,14 +71,20 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	public void onRestartGame() {
-		initialize ();
+		if (isPaused) {
+			isPaused = false;
+			gameOverScreen.SetActive (false);
+			Time.timeScale = 1;
+		} else {
+			initialize ();
+		}
 	}
 
-	private void showFinishGameOverlayWithText(string text) {
+	private void showOverlayWithText(string text) {
 		gameOverScreen.SetActive (true);
 		screenText.text = text;
 	}
-
+		
 	private void stopRacket() {
 		racket.setMovementDirection (Vector2.zero);
 	}
@@ -90,6 +108,11 @@ public class GameMaster : MonoBehaviour {
 		ballBehaviour.resetBallPosition ();
 		racket.resetRacketPosition ();
 		bot.resetRacketPosition ();
+	}
+
+	private void pauseGame() {
+		Time.timeScale = 0;
+		showOverlayWithText ("PAUSED");
 	}
 		
 }
