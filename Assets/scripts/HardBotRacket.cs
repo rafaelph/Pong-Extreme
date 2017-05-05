@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HardBotRacket : MonoBehaviour {
 
-	public GameMaster GameMaster;
+	public GameMaster gameMaster;
 
 	private Rigidbody2D racket;
 	private float racketSpeed = 30;
@@ -41,11 +41,11 @@ public class HardBotRacket : MonoBehaviour {
 	}
 
 	private bool isBallGoingToTheLeft() {
-		return GameMaster.getBallDirection().x < 0;
+		return gameMaster.getBallDirection().x < 0;
 	}
 
 	private bool isBallNotReactable() {
-		return GameMaster.getBallPosition ().x < 0;
+		return gameMaster.getBallPosition ().x < 0;
 	}
 
 	private void stopRacket () {
@@ -53,7 +53,7 @@ public class HardBotRacket : MonoBehaviour {
 	}
 
 	private void attemptToBlockTheBall() {
-		float ballAndRacketYDifference = Mathf.FloorToInt(GameMaster.getBallPosition ().y - racket.position.y);
+		float ballAndRacketYDifference = Mathf.FloorToInt(gameMaster.getBallPosition ().y - racket.position.y);
 		if (ballAndRacketYDifference > thresholdFactor) {
 			racket.velocity = new Vector2 (0, racketSpeed);
 		} else if (ballAndRacketYDifference < -thresholdFactor) {
@@ -64,6 +64,6 @@ public class HardBotRacket : MonoBehaviour {
 	}
 
 	private bool isBallRightOfRacket() {
-		return GameMaster.getBallPosition().x > racket.position.x;
+		return gameMaster.getBallPosition().x > racket.position.x;
 	}
 }

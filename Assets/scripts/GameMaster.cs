@@ -30,10 +30,10 @@ public class GameMaster : MonoBehaviour {
 
 	void Update() {
 		if (Input.GetKey(KeyCode.Escape)) {
-			if (!isPaused) { // if game is not yet paused, ESC will pause it
+			if (!isPaused) {
 				isPaused = true;
 				pauseGame();
-			} else { // if game is paused and ESC is pressed, it's the second press. QUIT
+			} else {
 				Application.Quit();
 			}
 		}
