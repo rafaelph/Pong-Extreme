@@ -13,7 +13,6 @@ public class GameOverTapHandler : MonoBehaviour, IPointerUpHandler, IPointerDown
 	}
 
 	public virtual void OnPointerDown(PointerEventData eventData) {
-//		gameMaster.onRestartGame ();
 	}
 
 }
