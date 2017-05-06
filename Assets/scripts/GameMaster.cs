@@ -5,14 +5,10 @@ using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour {
 
-	public PlayerRacket racket;
-	public HardBotRacket bot;
-	public float RacketSpeed;
+	public Player player;
+	public Player bot;
 	public BallBehaviour ballBehaviour;
 	public CameraShake cameraShake;
-
-	public Health playerOneHealth;
-	public Health playerTwoHealth;
 
 	public GameObject gameOverScreen;
 
@@ -40,8 +36,9 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	public void onLeftPlayerScore() {
-		playerTwoHealth.setHealth (playerTwoHealth.getHealth() - 10);
-		if (playerTwoHealth.getHealth () <= 0f) {
+		float botHealth = bot.getHealth ();
+		bot.setHealth (botHealth - 10);
+		if (botHealth <= 0f) {
 			showOverlayWithText ("You won!");
 			ballBehaviour.setMovementDirection (Vector2.zero);
 		}
@@ -49,8 +46,9 @@ public class GameMaster : MonoBehaviour {
 
 	public void onRightPlayerScore() {
 		shakeScreen ();
-		playerOneHealth.setHealth (playerOneHealth.getHealth() - 10);
-		if (playerOneHealth.getHealth () <= 0f) {
+		float playerHealth = player.getHealth();
+		player.setHealth (playerHealth - 10);
+		if (playerHealth <= 0f) {
 			showOverlayWithText ("Game Over");
 			ballBehaviour.setMovementDirection (Vector2.zero);
 		}
@@ -67,7 +65,7 @@ public class GameMaster : MonoBehaviour {
 
 	public void onAnalogPress(Vector2 analogPosition) {
 		moveBallIfGameStarted ();
-		racket.setMovementDirection (analogPosition * RacketSpeed);
+		player.setMovementDirection (analogPosition);
 	}
 
 	public void onRestartGame() {
@@ -86,7 +84,7 @@ public class GameMaster : MonoBehaviour {
 	}
 		
 	private void stopRacket() {
-		racket.setMovementDirection (Vector2.zero);
+		player.setMovementDirection (Vector2.zero);
 	}
 
 	private void moveBallIfGameStarted() {
@@ -102,11 +100,11 @@ public class GameMaster : MonoBehaviour {
 
 	private void initialize() {
 		hasGameStarted = false;
-		playerOneHealth.setHealth (100);
-		playerTwoHealth.setHealth (100);
 		gameOverScreen.SetActive (false);
+		player.setHealth (player.getMaxHealth ());
+		bot.setHealth (bot.getMaxHealth ());
 		ballBehaviour.resetBallPosition ();
-		racket.resetRacketPosition ();
+		player.resetRacketPosition ();
 		bot.resetRacketPosition ();
 	}
 

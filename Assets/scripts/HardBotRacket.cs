@@ -2,18 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HardBotRacket : MonoBehaviour {
+public class HardBotRacket : Player {
 
-	public GameMaster gameMaster;
-
-	private Rigidbody2D racket;
-	private float racketSpeed = 30;
 	private float thresholdFactor = 1f;
-	private float racketHeight;
-
-	void Awake () {
-		racket = GetComponent<Rigidbody2D> ();
-}
 	
 	void FixedUpdate () {
 		if (isBallRightOfRacket ()) {
@@ -25,6 +16,7 @@ public class HardBotRacket : MonoBehaviour {
 		}
 	}
 
+	override
 	public void resetRacketPosition() {
 		racket.transform.position = new Vector2 (26, 0);
 	}
@@ -32,11 +24,11 @@ public class HardBotRacket : MonoBehaviour {
 	private void returnToCenterPosition () {
 		float racketYPosition = Mathf.FloorToInt (racket.position.y);
 		if (racketYPosition < 0) {
-			racket.velocity = new Vector2 (0, racketSpeed);
+			setMovementDirection (Vector2.up);
 		} else if (racketYPosition > 0) {
-			racket.velocity = new Vector2 (0, -racketSpeed);
+			setMovementDirection (Vector2.down);
 		} else {
-			racket.velocity = Vector2.zero;
+			setMovementDirection (Vector2.zero);
 		}
 	}
 

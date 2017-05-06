@@ -20,6 +20,7 @@ public class BallBehaviour : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D collider) {
 		GameObject colliderObject = collider.gameObject;
+		activateParticle ();
 		if (collider.gameObject.CompareTag ("left_racket")) {
 			float yMagnitude = getYMagnitude (transform.position, colliderObject.transform.position, collider.collider.bounds.size.y);
 
@@ -29,7 +30,6 @@ public class BallBehaviour : MonoBehaviour {
 			}
 			Vector2 newDirection = new Vector2 (direction, yMagnitude).normalized;
 			ball.velocity = newDirection * ballSpeed;
-			activateParticle ();
 		} 
 
 		if (collider.gameObject.CompareTag ("right_racket")) {
@@ -40,7 +40,6 @@ public class BallBehaviour : MonoBehaviour {
 			}
 			Vector2 newDirection = new Vector2 (direction, yMagnitude).normalized;
 			ball.velocity = newDirection * ballSpeed;
-			activateParticle ();
 		}
 	}
 
