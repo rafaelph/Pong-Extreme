@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour {
 
+	public GameMaster gameMaster;
 	public int ballSpeed;
 
 	private Rigidbody2D ball;
@@ -21,7 +22,7 @@ public class BallBehaviour : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D collider) {
 		GameObject colliderObject = collider.gameObject;
 		activateSparkEffect ();
-		if (collider.gameObject.CompareTag ("left_racket")) {
+		if (collider.gameObject.name.Equals(gameMaster.getPlayerPaddleName())) {
 			float yMagnitude = getYMagnitude (transform.position, colliderObject.transform.position, collider.collider.bounds.size.y);
 
 			float direction = 1;
@@ -32,7 +33,7 @@ public class BallBehaviour : MonoBehaviour {
 			ball.velocity = newDirection * ballSpeed;
 		} 
 
-		if (collider.gameObject.CompareTag ("right_racket")) {
+		if (collider.gameObject.name.Equals (gameMaster.getBotPaddleName())) {
 			float yMagnitude = getYMagnitude (transform.position, colliderObject.transform.position, collider.collider.bounds.size.y);
 			float direction = -1;
 			if (colliderObject.transform.position.x < transform.position.x) {

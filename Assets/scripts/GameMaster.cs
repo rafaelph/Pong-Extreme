@@ -82,6 +82,14 @@ public class GameMaster : MonoBehaviour {
 		}
 	}
 
+	public string getPlayerPaddleName() {
+		return player.name;
+	}
+
+	public string getBotPaddleName() {
+		return bot.name;
+	}
+
 	private void showOverlayWithText(string text) {
 		gameOverScreen.SetActive (true);
 		screenText.text = text;
