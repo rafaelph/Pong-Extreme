@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour {
 
-	public Player player;
-	public Player bot;
+	public Paddle player;
+	public Paddle bot;
 	public BallBehaviour ballBehaviour;
 	public CameraShake cameraShake;
 
@@ -87,7 +87,7 @@ public class GameMaster : MonoBehaviour {
 		screenText.text = text;
 	}
 		
-	private void stopRacket() {
+	private void stopPlayerPaddle() {
 		player.setMovementDirection (Vector2.zero);
 	}
 
@@ -108,8 +108,8 @@ public class GameMaster : MonoBehaviour {
 		player.setHealth (player.getMaxHealth ());
 		bot.setHealth (bot.getMaxHealth ());
 		ballBehaviour.resetBallPosition ();
-		player.resetRacketPosition ();
-		bot.resetRacketPosition ();
+		player.resetPaddlePosition ();
+		bot.resetPaddlePosition ();
 	}
 
 	private void pauseGame() {

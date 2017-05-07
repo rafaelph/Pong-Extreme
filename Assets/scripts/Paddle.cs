@@ -2,31 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Player : MonoBehaviour {
+public abstract class Paddle : MonoBehaviour {
 
 	public GameMaster gameMaster;
 	public float maxHealth;
-	public float racketSpeed;
+	public float paddleSpeed;
 	public HealthBar healthBar;
 
-	protected Rigidbody2D racket;
+	protected Rigidbody2D paddle;
 
 	private float currentHealth;
 
 	void Awake() {
-		racket = GetComponent<Rigidbody2D> ();
+		paddle = GetComponent<Rigidbody2D> ();
 		currentHealth = maxHealth;
 	}
 
-	public abstract void resetRacketPosition();
+	public abstract void resetPaddlePosition();
 
 
 	public void setMovementDirection(Vector2 direction) {
-		racket.velocity = direction * racketSpeed;
+		paddle.velocity = direction * paddleSpeed;
 	}
  
-	public void setRacketSpeed (float speed) {
-		racketSpeed = speed;
+	public void setPaddleSpeed (float speed) {
+		paddleSpeed = speed;
 	}
 
 	public void setHealth(float health) {

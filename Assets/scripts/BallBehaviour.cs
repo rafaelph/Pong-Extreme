@@ -71,7 +71,7 @@ public class BallBehaviour : MonoBehaviour {
 		fireEffect.Play ();
 	}
 
-	private float getYMagnitude(Vector2 ballVector, Vector2 racketVector, float racketHeight) {
-		return (ballVector.y - racketVector.y) / racketHeight;
+	private float getYMagnitude(Vector2 ballVector, Vector2 paddleVector, float paddleHeight) {
+		return (ballVector.y - paddleVector.y) / paddleHeight;
 	}
 }
