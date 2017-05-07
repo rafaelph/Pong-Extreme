@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -67,15 +67,15 @@ public class Ball	 : MonoBehaviour {
 		ball.transform.position = Vector2.zero;
 	}
 
-	private void activateSparkEffect() {
+	public void activateSparkEffect() {
 		sparkEffect.Play ();
 	}
 
-	private void activateFireEffect() {
+	public void activateFireEffect() {
 		fireEffect.Play ();
 	}
 
-	private void deactivateFireEffect() {
+	public void deactivateFireEffect() {
 		fireEffect.Stop ();
 	}
 

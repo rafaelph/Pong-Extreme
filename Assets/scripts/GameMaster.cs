@@ -125,6 +125,7 @@ public class GameMaster : MonoBehaviour {
 		hasGameStarted = false;
 		gameOverScreen.SetActive (false);
 		player.setHealth (player.getMaxHealth ());
+		ball.deactivateFireEffect ();
 		bot.setHealth (bot.getMaxHealth ());
 		ball.resetBallPosition ();
 		player.resetPaddlePosition ();

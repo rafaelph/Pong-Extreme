@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +12,11 @@ public abstract class Paddle : MonoBehaviour {
 	protected Rigidbody2D paddle;
 
 	private float currentHealth;
+	private SpriteRenderer spriteRenderer;
 
 	void Awake() {
 		paddle = GetComponent<Rigidbody2D> ();
+		spriteRenderer = GetComponent<SpriteRenderer> ();
 		currentHealth = maxHealth;
 	}
 
@@ -49,15 +51,13 @@ public abstract class Paddle : MonoBehaviour {
 	}
 
 	public void activateBoostMode() {
-		GetComponent<SpriteRenderer> ().color = new Color (255, 0, 0);
+		spriteRenderer.color = new Color (255, 0, 0);
 		paddleSpeed = paddleSpeed * 2;
-		paddle.velocity = paddle.velocity.normalized * paddleSpeed;
 	}
 
 	public void deactivateBoostMode() {
-		GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255);
+		spriteRenderer.color = new Color (255, 255, 255);
 		paddleSpeed = paddleSpeed / 2;
-		paddle.velocity = paddle.velocity.normalized * paddleSpeed;
 	}
 
 }
