@@ -7,7 +7,7 @@ public class GameMaster : MonoBehaviour {
 
 	public Paddle player;
 	public Paddle bot;
-	public BallBehaviour ballBehaviour;
+	public Ball ball;
 	public CameraShake cameraShake;
 
 	public GameObject gameOverScreen;
@@ -17,9 +17,10 @@ public class GameMaster : MonoBehaviour {
 	private int ballSpeed;
 	private bool hasGameStarted = false;
 	private bool isPaused = false;
+	private bool playerBoostMode = false;
 
 	void Start() {
-		ballSpeed = ballBehaviour.ballSpeed;
+		ballSpeed = ball.ballSpeed;
 		initialize ();
 		screenText = gameOverScreen.GetComponentInChildren<Text> ();
 	}
@@ -40,7 +41,7 @@ public class GameMaster : MonoBehaviour {
 		bot.setHealth (botHealth - 10);
 		if (botHealth <= 0f) {
 			showOverlayWithText ("You won!");
-			ballBehaviour.setMovementDirection (Vector2.zero);
+			ball.setMovementDirection (Vector2.zero);
 		}
 	}
 
@@ -50,21 +51,17 @@ public class GameMaster : MonoBehaviour {
 		player.setHealth (playerHealth - 10);
 		if (playerHealth <= 0f) {
 			showOverlayWithText ("Game Over");
-			ballBehaviour.setMovementDirection (Vector2.zero);
+			ball.setMovementDirection (Vector2.zero);
 		}
 
 	}
 
 	public Vector2 getBallPosition() {
-		return ballBehaviour.getBallPosition();
+		return ball.getBallPosition();
 	}
 
 	public Vector2 getBallDirection() {
-		return ballBehaviour.getBallDirection();
-	}
-
-	public void activateBoostMode() {
-		ballBehaviour.updateCurrentBallSpeed (ballSpeed * 2);
+		return ball.getBallDirection();
 	}
 
 	public void onAnalogPress(Vector2 analogPosition) {
@@ -90,6 +87,20 @@ public class GameMaster : MonoBehaviour {
 		return bot.name;
 	}
 
+	public void activateBoostMode() {
+		playerBoostMode = true;
+		player.activateBoostMode ();
+	}
+
+	public void deactivateBoostMode() {
+		playerBoostMode = false;
+		player.deactivateBoostMode ();
+	}
+
+	public bool isPlayerBoostMode() {
+		return playerBoostMode;
+	}
+
 	private void showOverlayWithText(string text) {
 		gameOverScreen.SetActive (true);
 		screenText.text = text;
@@ -102,7 +113,7 @@ public class GameMaster : MonoBehaviour {
 	private void moveBallIfGameStarted() {
 		if (!hasGameStarted) {
 			hasGameStarted = true;
-			ballBehaviour.setMovementDirection (new Vector2 (ballSpeed, 0));
+			ball.setMovementDirection (new Vector2 (ballSpeed, 0));
 		}
 	}
 
@@ -115,7 +126,7 @@ public class GameMaster : MonoBehaviour {
 		gameOverScreen.SetActive (false);
 		player.setHealth (player.getMaxHealth ());
 		bot.setHealth (bot.getMaxHealth ());
-		ballBehaviour.resetBallPosition ();
+		ball.resetBallPosition ();
 		player.resetPaddlePosition ();
 		bot.resetPaddlePosition ();
 	}

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InputPlaneHandler : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler {
+public class InputMovementPlaneHandler : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler {
 
 	private Vector2 previousTapPosition = Vector2.zero;
 	private float threshold = 3.0f;

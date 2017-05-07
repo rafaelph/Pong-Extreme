@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallBehaviour : MonoBehaviour {
+public class Ball	 : MonoBehaviour {
 
 	public GameMaster gameMaster;
 	public int ballSpeed;
@@ -15,14 +15,10 @@ public class BallBehaviour : MonoBehaviour {
 		ball = GetComponent<Rigidbody2D> ();
 	}
 
-	void Start () {
-
-	}
-
 	void OnCollisionEnter2D (Collision2D collider) {
 		GameObject colliderObject = collider.gameObject;
 		activateSparkEffect ();
-		if (collider.gameObject.name.Equals(gameMaster.getPlayerPaddleName())) {
+		if (collider.gameObject.name.Equals (gameMaster.getPlayerPaddleName ())) {
 			float yMagnitude = getYMagnitude (transform.position, colliderObject.transform.position, collider.collider.bounds.size.y);
 
 			float direction = 1;
@@ -30,10 +26,14 @@ public class BallBehaviour : MonoBehaviour {
 				direction = -1;
 			}
 			Vector2 newDirection = new Vector2 (direction, yMagnitude).normalized;
-			ball.velocity = newDirection * ballSpeed;
-		} 
+			if (gameMaster.isPlayerBoostMode ()) {
+				ball.velocity = newDirection * ballSpeed * 2;
+				activateFireEffect ();
+			} else {
+				ball.velocity = newDirection * ballSpeed;
+			}
 
-		if (collider.gameObject.name.Equals (gameMaster.getBotPaddleName())) {
+		} else if (collider.gameObject.name.Equals (gameMaster.getBotPaddleName ())) {
 			float yMagnitude = getYMagnitude (transform.position, colliderObject.transform.position, collider.collider.bounds.size.y);
 			float direction = -1;
 			if (colliderObject.transform.position.x < transform.position.x) {
@@ -41,6 +41,9 @@ public class BallBehaviour : MonoBehaviour {
 			}
 			Vector2 newDirection = new Vector2 (direction, yMagnitude).normalized;
 			ball.velocity = newDirection * ballSpeed;
+			deactivateFireEffect ();
+		} else if (collider.gameObject.CompareTag ("score_wall")) {
+			ball.velocity = ball.velocity.normalized * ballSpeed;
 		}
 	}
 
@@ -68,8 +71,12 @@ public class BallBehaviour : MonoBehaviour {
 		sparkEffect.Play ();
 	}
 
-	public void activateFireEffect() {
+	private void activateFireEffect() {
 		fireEffect.Play ();
+	}
+
+	private void deactivateFireEffect() {
+		fireEffect.Stop ();
 	}
 
 	private float getYMagnitude(Vector2 ballVector, Vector2 paddleVector, float paddleHeight) {

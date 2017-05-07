@@ -49,7 +49,15 @@ public abstract class Paddle : MonoBehaviour {
 	}
 
 	public void activateBoostMode() {
-		gameMaster.activateBoostMode ();
+		GetComponent<SpriteRenderer> ().color = new Color (255, 0, 0);
+		paddleSpeed = paddleSpeed * 2;
+		paddle.velocity = paddle.velocity.normalized * paddleSpeed;
+	}
+
+	public void deactivateBoostMode() {
+		GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255);
+		paddleSpeed = paddleSpeed / 2;
+		paddle.velocity = paddle.velocity.normalized * paddleSpeed;
 	}
 
 }
