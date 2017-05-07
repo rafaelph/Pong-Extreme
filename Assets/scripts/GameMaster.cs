@@ -63,6 +63,10 @@ public class GameMaster : MonoBehaviour {
 		return ballBehaviour.getBallDirection();
 	}
 
+	public void activateBoostMode() {
+		ballBehaviour.updateCurrentBallSpeed (ballSpeed * 2);
+	}
+
 	public void onAnalogPress(Vector2 analogPosition) {
 		moveBallIfGameStarted ();
 		player.setMovementDirection (analogPosition);

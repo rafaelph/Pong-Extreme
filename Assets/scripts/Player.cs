@@ -48,4 +48,8 @@ public abstract class Player : MonoBehaviour {
 		return maxHealth;
 	}
 
+	public void activateBoostMode() {
+		gameMaster.activateBoostMode ();
+	}
+
 }

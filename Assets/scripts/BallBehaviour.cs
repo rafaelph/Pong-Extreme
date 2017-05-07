@@ -7,11 +7,11 @@ public class BallBehaviour : MonoBehaviour {
 	public int ballSpeed;
 
 	private Rigidbody2D ball;
-	private ParticleSystem ParticleSystem;
+	public ParticleSystem sparkEffect;
+	public ParticleSystem fireEffect;
 
 	void Awake() {
 		ball = GetComponent<Rigidbody2D> ();
-		ParticleSystem = GetComponentInChildren<ParticleSystem> ();
 	}
 
 	void Start () {
@@ -20,7 +20,7 @@ public class BallBehaviour : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D collider) {
 		GameObject colliderObject = collider.gameObject;
-		activateParticle ();
+		activateSparkEffect ();
 		if (collider.gameObject.CompareTag ("left_racket")) {
 			float yMagnitude = getYMagnitude (transform.position, colliderObject.transform.position, collider.collider.bounds.size.y);
 
@@ -47,6 +47,10 @@ public class BallBehaviour : MonoBehaviour {
 		ball.velocity = direction;
 	}
 
+	public void updateCurrentBallSpeed(float ballSpeed) {
+		ball.velocity = ball.velocity.normalized * ballSpeed;
+	}
+
 	public Vector2 getBallPosition() {
 		return ball.position;
 	}
@@ -59,8 +63,12 @@ public class BallBehaviour : MonoBehaviour {
 		ball.transform.position = Vector2.zero;
 	}
 
-	private void activateParticle() {
-		ParticleSystem.Play ();
+	private void activateSparkEffect() {
+		sparkEffect.Play ();
+	}
+
+	public void activateFireEffect() {
+		fireEffect.Play ();
 	}
 
 	private float getYMagnitude(Vector2 ballVector, Vector2 racketVector, float racketHeight) {
