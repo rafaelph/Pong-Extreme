@@ -44,6 +44,7 @@ public class Ball	 : MonoBehaviour {
 			deactivateFireEffect ();
 		} else if (collider.gameObject.CompareTag ("score_wall")) {
 			ball.velocity = ball.velocity.normalized * ballSpeed;
+			deactivateFireEffect ();
 		}
 	}
 
