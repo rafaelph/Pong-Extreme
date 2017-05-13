@@ -8,15 +8,22 @@ public class Ball	 : MonoBehaviour {
 	public int ballSpeed;
 
 	private Rigidbody2D ball;
+	private AudioSource audioSource;
+
 	public ParticleSystem sparkEffect;
 	public ParticleSystem fireEffect;
+	public AudioClip ballImpactSound;
 
 	void Awake() {
 		ball = GetComponent<Rigidbody2D> ();
+		audioSource = GetComponent<AudioSource> ();
+		audioSource.playOnAwake = false;
+		audioSource.clip = ballImpactSound;
 	}
 
 	void OnCollisionEnter2D (Collision2D collider) {
 		GameObject colliderObject = collider.gameObject;
+		audioSource.Play ();
 		activateSparkEffect ();
 		if (collider.gameObject.name.Equals (gameMaster.getPlayerPaddleName ())) {
 			float yMagnitude = getYMagnitude (transform.position, colliderObject.transform.position, collider.collider.bounds.size.y);
