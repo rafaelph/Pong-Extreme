@@ -5,14 +5,33 @@ using UnityEngine;
 public class HardBotPaddle : Paddle {
 
 	private float thresholdFactor = 1f;
-	
+	public int chanceToActAccordingly;
+
+	private bool hasChanceGeneratorRan = false;
+	private bool isSuccessful = false;
+
 	void FixedUpdate () {
 		if (isBallRightOfPaddle ()) {
 			returnToCenterPosition ();
+			hasChanceGeneratorRan = false;
+			isSuccessful = false;
 		} else if (isBallGoingToTheLeft () || isBallNotReactable ()) {
 			stopPaddle ();
+			hasChanceGeneratorRan = false;
+			isSuccessful = false;
 		} else {
-			attemptToBlockTheBall ();
+			if (hasChanceGeneratorRan) {
+				if (isSuccessful) {
+					attemptToBlockTheBall ();
+				}
+			} else {
+				if (ChanceGenerator.IsSuccessful (chanceToActAccordingly)) {
+					isSuccessful = true;
+				} else {
+					isSuccessful = false;
+				}
+				hasChanceGeneratorRan = true;
+			}
 		}
 	}
 
