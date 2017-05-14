@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class GameMaster : MonoBehaviour {
 
 	public Paddle player;
-	public Paddle bot;
+	public HardBotPaddle bot;
 	public Ball ball;
 	public CameraShake cameraShake;
+	public Text levelText;
 
 	public GameObject gameOverScreen;
 
@@ -18,6 +19,7 @@ public class GameMaster : MonoBehaviour {
 	private bool hasGameStarted = false;
 	private bool isPaused = false;
 	private bool playerBoostMode = false;
+	private int gameLevel = 1;
 
 	void Start() {
 		ballSpeed = ball.ballSpeed;
@@ -42,6 +44,7 @@ public class GameMaster : MonoBehaviour {
 		if (botHealth <= 0f) {
 			showOverlayWithText ("You won!");
 			ball.setMovementDirection (Vector2.zero);
+			gameLevel++;
 		}
 	}
 
@@ -130,6 +133,8 @@ public class GameMaster : MonoBehaviour {
 		ball.resetBallPosition ();
 		player.resetPaddlePosition ();
 		bot.resetPaddlePosition ();
+		bot.chanceToActAccordingly = gameLevel * 10;
+		levelText.text = "Level " + gameLevel.ToString ();
 	}
 
 	private void pauseGame() {
