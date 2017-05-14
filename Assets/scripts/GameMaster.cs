@@ -32,6 +32,7 @@ public class GameMaster : MonoBehaviour {
 			if (!isPaused) {
 				isPaused = true;
 				pauseGame();
+				showOverlayWithText ("PAUSED");
 			} else {
 				Application.Quit();
 			}
@@ -45,6 +46,7 @@ public class GameMaster : MonoBehaviour {
 			showOverlayWithText ("You won!");
 			ball.setMovementDirection (Vector2.zero);
 			gameLevel++;
+			pauseGame ();
 		}
 	}
 
@@ -53,8 +55,10 @@ public class GameMaster : MonoBehaviour {
 		float playerHealth = player.getHealth();
 		player.setHealth (playerHealth - 10);
 		if (playerHealth <= 0f) {
+			Time.timeScale = 0;
 			showOverlayWithText ("Game Over");
 			ball.setMovementDirection (Vector2.zero);
+			pauseGame ();
 		}
 
 	}
@@ -76,7 +80,7 @@ public class GameMaster : MonoBehaviour {
 		if (isPaused) {
 			isPaused = false;
 			gameOverScreen.SetActive (false);
-			Time.timeScale = 1;
+			resumeGame();
 		} else {
 			initialize ();
 		}
@@ -135,11 +139,15 @@ public class GameMaster : MonoBehaviour {
 		bot.resetPaddlePosition ();
 		bot.chanceToActAccordingly = gameLevel * 10;
 		levelText.text = "Level " + gameLevel.ToString ();
+		resumeGame ();
 	}
 
 	private void pauseGame() {
 		Time.timeScale = 0;
-		showOverlayWithText ("PAUSED");
+	}
+
+	private void resumeGame() {
+		Time.timeScale = 1;
 	}
 		
 }
