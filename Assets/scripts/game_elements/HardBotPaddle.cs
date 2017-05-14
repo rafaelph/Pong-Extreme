@@ -23,6 +23,8 @@ public class HardBotPaddle : Paddle {
 			if (hasChanceGeneratorRan) {
 				if (isSuccessful) {
 					attemptToBlockTheBall ();
+				} else {
+					screwUp ();
 				}
 			} else {
 				if (ChanceGenerator.IsSuccessful (chanceToActAccordingly)) {
@@ -76,5 +78,16 @@ public class HardBotPaddle : Paddle {
 
 	private bool isBallRightOfPaddle() {
 		return gameMaster.getBallPosition().x > paddle.position.x;
+	}
+
+	private void screwUp () {
+		float ballAndPaddleYDifference = Mathf.FloorToInt(gameMaster.getBallPosition ().y - paddle.position.y);
+		if (ballAndPaddleYDifference > thresholdFactor) {
+			paddle.velocity = new Vector2 (0, -paddleSpeed);
+		} else if (ballAndPaddleYDifference < -thresholdFactor) {
+			paddle.velocity = new Vector2 (0, paddleSpeed);
+		} else {
+			paddle.velocity = Vector2.zero;
+		}	
 	}
 }
