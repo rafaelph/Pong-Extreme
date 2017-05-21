@@ -31,7 +31,7 @@ public class GameMaster : MonoBehaviour {
 		if (Input.GetKey(KeyCode.Escape)) {
 			if (!isPaused) {
 				isPaused = true;
-				pauseGame();
+				pauseGameAndSound();
 				showOverlayWithText ("PAUSED", Color.white);
 			}
 		}
@@ -53,7 +53,6 @@ public class GameMaster : MonoBehaviour {
 		float playerHealth = player.getHealth();
 		player.setHealth (playerHealth - 10);
 		if (playerHealth <= 0f) {
-			Time.timeScale = 0;
 			showOverlayWithText ("YOU LOST", Color.red);
 			ball.setMovementDirection (Vector2.zero);
 			pauseGame ();
@@ -78,7 +77,7 @@ public class GameMaster : MonoBehaviour {
 		if (isPaused) {
 			isPaused = false;
 			gameOverScreen.SetActive (false);
-			resumeGame();
+			resumeGameAndSound();
 		} else {
 			initialize ();
 		}
@@ -138,17 +137,25 @@ public class GameMaster : MonoBehaviour {
 		bot.resetPaddlePosition ();
 		bot.chanceToActAccordingly = gameLevel * 10;
 		levelText.text = "Level " + gameLevel.ToString ();
+		resumeGameAndSound ();
+	}
+
+	private void pauseGameAndSound() {
+		AudioListener.pause = true;
+		pauseGame ();
+	}
+
+	private void resumeGameAndSound() {
+		AudioListener.pause = false;
 		resumeGame ();
 	}
 
 	private void pauseGame() {
 		Time.timeScale = 0;
-		AudioListener.pause = true;
 	}
 
 	private void resumeGame() {
 		Time.timeScale = 1;
-		AudioListener.pause = false;
 	}
 		
 }
