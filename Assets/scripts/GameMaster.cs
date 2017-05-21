@@ -33,8 +33,6 @@ public class GameMaster : MonoBehaviour {
 				isPaused = true;
 				pauseGame();
 				showOverlayWithText ("PAUSED", Color.white);
-			} else {
-				Application.Quit();
 			}
 		}
 	}
@@ -145,10 +143,12 @@ public class GameMaster : MonoBehaviour {
 
 	private void pauseGame() {
 		Time.timeScale = 0;
+		AudioListener.pause = true;
 	}
 
 	private void resumeGame() {
 		Time.timeScale = 1;
+		AudioListener.pause = false;
 	}
 		
 }
