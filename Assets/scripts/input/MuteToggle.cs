@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class MuteToggle : MonoBehaviour {
 
-	private bool isMute = false;
 	private float volume;
 
 	private Image image;
@@ -14,30 +13,30 @@ public class MuteToggle : MonoBehaviour {
 	public Sprite soundSprite;
 
 	public void Awake() {
-		this.volume = AudioListener.volume;
 		this.image = GetComponent<Image> ();
+		if (isMute()) {
+			setDisabledSoundSprite ();
+		} else {
+			setSoundEnabledSprite ();
+		}
 	}
 
 	public void onSoundToggleClick() {
-		if (isMute) {
+		if (isMute()) {
 			enableSound ();
 			setSoundEnabledSprite ();
-			isMute = false;
 		} else {
 			setDisabledSoundSprite();
 			disableSound ();
-			isMute = true;
 		}
 	}
 
 	private void disableSound() {
 		AudioListener.volume = 0;
-		isMute = true;
 	}
 
 	private void enableSound() {
-		AudioListener.volume = volume;
-		isMute = false;
+		AudioListener.volume = 1.0f;
 	}
 
 	private void setSoundEnabledSprite() {
@@ -46,6 +45,10 @@ public class MuteToggle : MonoBehaviour {
 
 	private void setDisabledSoundSprite() {
 		image.sprite = muteSprite;
+	}
+
+	private bool isMute() {
+		return AudioListener.volume <= 0.0f;
 	}
 		
 }
