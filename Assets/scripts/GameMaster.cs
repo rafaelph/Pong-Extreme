@@ -32,7 +32,7 @@ public class GameMaster : MonoBehaviour {
 			if (!isPaused) {
 				isPaused = true;
 				pauseGame();
-				showOverlayWithText ("PAUSED");
+				showOverlayWithText ("PAUSED", Color.white);
 			} else {
 				Application.Quit();
 			}
@@ -43,7 +43,7 @@ public class GameMaster : MonoBehaviour {
 		float botHealth = bot.getHealth ();
 		bot.setHealth (botHealth - 10);
 		if (botHealth <= 0f) {
-			showOverlayWithText ("You won!");
+			showOverlayWithText ("YOU WON", Color.green);
 			ball.setMovementDirection (Vector2.zero);
 			gameLevel++;
 			pauseGame ();
@@ -56,7 +56,7 @@ public class GameMaster : MonoBehaviour {
 		player.setHealth (playerHealth - 10);
 		if (playerHealth <= 0f) {
 			Time.timeScale = 0;
-			showOverlayWithText ("Game Over");
+			showOverlayWithText ("YOU LOST", Color.red);
 			ball.setMovementDirection (Vector2.zero);
 			pauseGame ();
 		}
@@ -108,8 +108,9 @@ public class GameMaster : MonoBehaviour {
 		return playerBoostMode;
 	}
 
-	private void showOverlayWithText(string text) {
+	private void showOverlayWithText(string text, Color color) {
 		gameOverScreen.SetActive (true);
+		screenText.color = color;
 		screenText.text = text;
 	}
 		
