@@ -10,6 +10,7 @@ public class GameMaster : MonoBehaviour {
 	public Ball ball;
 	public CameraShake cameraShake;
 	public Text levelText;
+	public Text maxLevelText;
 
 	public GameObject gameOverScreen;
 
@@ -19,10 +20,12 @@ public class GameMaster : MonoBehaviour {
 	private bool hasGameStarted = false;
 	private bool isPaused = false;
 	private bool playerBoostMode = false;
+	private GeneralRepository repository;
 	private int gameLevel = 1;
 
 	void Start() {
 		ballSpeed = ball.ballSpeed;
+		repository = new GeneralRepository ();
 		initialize ();
 		screenText = gameOverScreen.GetComponentInChildren<Text> ();
 	}
@@ -137,7 +140,9 @@ public class GameMaster : MonoBehaviour {
 		bot.resetPaddlePosition ();
 		bot.chanceToActAccordingly = gameLevel * 10;
 		levelText.text = "Level " + gameLevel.ToString ();
+		updateMaxScore (gameLevel);
 		resumeGameAndSound ();
+		showMaxScore ();
 	}
 
 	private void pauseGameAndSound() {
@@ -156,6 +161,17 @@ public class GameMaster : MonoBehaviour {
 
 	private void resumeGame() {
 		Time.timeScale = 1;
+	}
+
+	private void showMaxScore() {
+		maxLevelText.text = "Max level: " + repository.getMaxScore ();
+	}
+
+	private void updateMaxScore(int level) {
+
+		if (repository.getMaxScore () < level) {
+			repository.setMaxScore (level);
+		}
 	}
 		
 }
