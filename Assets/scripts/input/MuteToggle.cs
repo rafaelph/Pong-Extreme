@@ -12,12 +12,17 @@ public class MuteToggle : MonoBehaviour {
 	public Sprite muteSprite;
 	public Sprite soundSprite;
 
+	private GeneralRepository repository;
+
 	public void Awake() {
+		repository = new GeneralRepository ();
 		this.image = GetComponent<Image> ();
 		if (isMute()) {
 			setDisabledSoundSprite ();
+			disableSound ();
 		} else {
 			setSoundEnabledSprite ();
+			enableSound ();
 		}
 	}
 
@@ -32,10 +37,12 @@ public class MuteToggle : MonoBehaviour {
 	}
 
 	private void disableSound() {
+		repository.enableMute ();
 		AudioListener.volume = 0;
 	}
 
 	private void enableSound() {
+		repository.disableMute ();
 		AudioListener.volume = 1.0f;
 	}
 
@@ -48,7 +55,7 @@ public class MuteToggle : MonoBehaviour {
 	}
 
 	private bool isMute() {
-		return AudioListener.volume <= 0.0f;
+		return repository.getMuteStatus () == 1 ? true : false;
 	}
 		
 }
