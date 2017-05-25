@@ -11,7 +11,6 @@ public class GameMaster : MonoBehaviour {
 	public CameraShake cameraShake;
 	public Text levelText;
 	public Text maxLevelText;
-
 	public GameObject gameOverScreen;
 
 	private Text screenText;
@@ -21,6 +20,7 @@ public class GameMaster : MonoBehaviour {
 	private bool isPaused = false;
 	private bool playerBoostMode = false;
 	private GeneralRepository repository;
+	private AdScript adScript = new AdScript();
 	private int gameLevel = 1;
 
 	void Start() {
@@ -28,6 +28,7 @@ public class GameMaster : MonoBehaviour {
 		repository = new GeneralRepository ();
 		initialize ();
 		screenText = gameOverScreen.GetComponentInChildren<Text> ();
+		adScript.requestBanner ();
 	}
 
 	void Update() {
