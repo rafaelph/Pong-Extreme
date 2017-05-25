@@ -43,7 +43,7 @@ public class MuteToggle : MonoBehaviour {
 
 	private void enableSound() {
 		repository.disableMute ();
-		AudioListener.volume = 1.0f;
+		AudioListener.volume = 0.5f;
 	}
 
 	private void setSoundEnabledSprite() {
