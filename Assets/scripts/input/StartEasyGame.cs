@@ -15,6 +15,14 @@ public class StartEasyGame : MonoBehaviour {
 		showLoadingScreen ();
 	}
 
+	public void openCreditsScene() {
+		SceneManager.LoadScene ("Credits Scene");
+	}
+
+	public void openMainMenu() {
+		SceneManager.LoadScene ("Main Menu Scene");
+	}
+
 	private void showLoadingScreen() {
 		loadingMask.SetActive (true);
 	}
